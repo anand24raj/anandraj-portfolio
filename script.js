@@ -1,0 +1,16 @@
+"use strict";
+const body=document.body, menuBtn=document.getElementById('menu-btn'), navLinks=document.getElementById('nav-links'), navbar=document.querySelector('.navbar');
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+body.classList.add('page-ready');
+if(menuBtn&&navLinks){menuBtn.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));const i=menuBtn.querySelector('i');if(i){i.classList.toggle('fa-bars',!open);i.classList.toggle('fa-xmark',open);}});navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');const i=menuBtn.querySelector('i');if(i){i.classList.remove('fa-xmark');i.classList.add('fa-bars')}}));}
+function nav(){navbar?.classList.toggle('scrolled',scrollY>30)} addEventListener('scroll',nav,{passive:true});nav();
+const reveals=document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window&&!reduced){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -45px'});reveals.forEach(e=>io.observe(e));}else reveals.forEach(e=>e.classList.add('visible'));
+const sections=[...document.querySelectorAll('section[id]')], anchors=[...document.querySelectorAll('.nav-links a')];
+function active(){let cur='';sections.forEach(s=>{if(scrollY>=s.offsetTop-180&&scrollY<s.offsetTop+s.offsetHeight-180)cur=s.id});anchors.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur))}addEventListener('scroll',active,{passive:true});active();
+const cards=document.querySelectorAll('.project-card,.highlight-card,.skill-category,.experience-card,.training-card,.certificate-card');
+if(!reduced&&!matchMedia('(max-width:850px)').matches){cards.forEach(card=>{card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(900px) rotateX(${y*-3}deg) rotateY(${x*3}deg) translateY(-5px)`});card.addEventListener('pointerleave',()=>card.style.transform='')});}
+const hero=document.querySelector('.hero'), profile=document.querySelector('.profile-card');
+if(hero&&!reduced){hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',`${((e.clientX-r.left)/r.width)*100}%`);hero.style.setProperty('--my',`${((e.clientY-r.top)/r.height)*100}%`)});}
+if(profile&&!reduced&&!matchMedia('(max-width:850px)').matches){profile.addEventListener('pointermove',e=>{const r=profile.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;profile.style.transform=`rotate(0deg) perspective(800px) rotateX(${y*-5}deg) rotateY(${x*5}deg) scale(1.02)`});profile.addEventListener('pointerleave',()=>profile.style.transform='rotate(2deg)')}
+const topBtn=document.getElementById('topBtn');if(topBtn){const update=()=>topBtn.classList.toggle('show',scrollY>500);addEventListener('scroll',update,{passive:true});update();topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:reduced?'auto':'smooth'}));}
