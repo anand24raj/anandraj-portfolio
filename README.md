@@ -45,33 +45,12 @@ I am interested in Software Development and Quality Assurance roles where I can 
 - JavaScript
 - Responsive Web Design
 
-### Programming & Backend
-
-- Java
-- JSP
-- Servlets
-- JDBC
-- Spring
-- Spring Boot
-
-### Database
-
-- Oracle Database
-- SQLite
-
-### Testing
-
-- JUnit
-- Unit Testing
-
 ### Tools
 
 - Git
 - GitHub
-- Eclipse
 - VS Code
-- Android Studio
-- Apache Tomcat
+
 
 ---
 
